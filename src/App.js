@@ -1,6 +1,6 @@
 import React, { setState } from "react";
 import styled, { css } from "styled-components";
-import { Pawn, DraggablePiece } from "./pieces";
+import { DraggablePiece, BlackPieces } from "./pieces";
 
 const Form = styled.div`
   position: absolute;
@@ -38,9 +38,9 @@ export function renderSquare(i) {
     (Math.floor(i / 8) % 2 == 0 && i % 2 == 0) ||
     (Math.floor(i / 8) % 2 == 1 && i % 2 == 1);
   if (isBlack) {
-    return <Square></Square>;
+    return <Square id={i}></Square>;
   }
-  return <Square Black></Square>;
+  return <Square Black id={i}></Square>;
 }
 
 export function renderSquares() {
@@ -49,10 +49,6 @@ export function renderSquares() {
     items.push(renderSquare(i));
   }
   return items;
-}
-
-export function renderPieces() {
-  return <Pawn></Pawn>;
 }
 
 class Clock extends React.Component {
@@ -69,15 +65,20 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.items = renderSquares();
-    this.pieces = renderPieces();
-    this.state = { clock: new Date(300000) };
-    console.log(this.state.clock.getMinutes());
   }
+
+  componentDidMount() {
+      console.log(this.items[0]);
+  }
+
   render() {
     return (
       <Form>
         <Board>{this.items}</Board>
-        <DraggablePiece></DraggablePiece>
+        <DraggablePiece piece={BlackPieces.pawn}></DraggablePiece>
+        <DraggablePiece piece={BlackPieces.rook}></DraggablePiece>
+        <DraggablePiece piece={BlackPieces.bishop}></DraggablePiece>
+        <DraggablePiece piece={BlackPieces.knight}></DraggablePiece>
       </Form>
     );
   }
