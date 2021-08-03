@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import Draggable from "react-draggable";
 
 export const Pawn = (props) => (
   <div style={{ height: "100%", width: "100%" }} className="size">
@@ -11,7 +11,6 @@ export const Pawn = (props) => (
       <g
         transform="translate(0.000000,225.000000) scale(0.100000,-0.100000)"
         fill={props.color}
-        stroke="none"
       >
         <path
           d="M1047 2000 c-44 -14 -95 -58 -117 -100 -41 -81 -13 -188 63 -238 l40
@@ -192,8 +191,6 @@ export const Queen = (props) => (
     style={{
       height: "100%",
       width: "100%",
-      position: "absolute",
-      overflow: "visible",
     }}
     className="size"
   >
@@ -259,33 +256,16 @@ export const BluePieces = {
 };
 
 export const DraggablePiece = (props) => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [pressed, setPressed] = useState(false);
-  const ref = useRef();
-
-  useEffect(() => {
-    if (ref.current) {
-      ref.current.style.transform = `translate(${position.x}px, ${position.y}px)`;
-    }
-  }, [position]);
-
-  const onMouseMove = (event) => {
-    if (pressed) {
-      setPosition({
-        x: position.x + event.movementX,
-        y: position.y + event.movementY,
-      });
-    }
+  const handleDrag = (event) => {
+    console.log("Dragging!");
   };
+  const handleStop = (event) => {
+      console.log("Stopped!");
+  }
 
   return (
-    <div
-      ref={ref}
-      onMouseDown={() => setPressed(true)}
-      onMouseUp={() => setPressed(false)}
-      onMouseMove={onMouseMove}
-    >
-      {props.piece}
-    </div>
+    <Draggable onDrag={handleDrag} onStop={handleStop}>
+      <div>{props.piece}</div>
+    </Draggable>
   );
 };

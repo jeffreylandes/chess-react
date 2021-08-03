@@ -63,7 +63,6 @@ const Square = styled.div`
   background-color: white;
   width: 12.5%;
   height: 12.5%;
-  position: relative;
   ${(props) =>
     props.Black &&
     css`
@@ -101,24 +100,10 @@ export function renderSquares() {
   return items;
 }
 
-class Clock extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { clock: new Date(300000) };
-  }
-  render() {
-    return <div>It is {this.state.clock.getMinutes()}</div>;
-  }
-}
-
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.items = renderSquares();
-  }
-
-  componentDidMount() {
-      console.log(this.items[0]);
   }
 
   render() {
